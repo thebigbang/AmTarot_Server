@@ -110,10 +110,10 @@ namespace Server.WS
         {
             //supprime la carte du paquet du joueur.
             PlayersData pd = PlayersData.Get(playerId);
-            // ce n'est pas au tour de ce joueur houuu le vilain.
+            // ce n'est pas au tour de ce joueur
             if(!pd.IsPlayersTurn)return;
             HostedGames hg = HostedGames.Get(playerId);
-            //le joueur a deja joué houuu le gros vilain à falsifier 2 fois les informations...
+            //le joueur a deja joué
             if(hg.CardsInTurn!=null && hg.CardsInTurn.Contains(playerId.ToString()))return;
             int posi = hg.PlayersData.ToList().IndexOf(pd) + 1;
             hg.PlayersData.ToList()[posi].IsPlayersTurn = true;
@@ -124,12 +124,10 @@ namespace Server.WS
             pd.IsPlayersTurn = false;
             PlayersData.Update(pd);
             HostedGames.Update(hg);
-            //note: peut-être ca serait intelligent d'avoir une liste des cartes jouées dans le tour en cours...? :p
+            //cartes jouées dans le tour
             if (hg.CardsInTurn == null) hg.CardsInTurn = "";
             hg.CardsInTurn += "[" + playerId + "]" + card.Name + "#";
-            //t..odo: ajouter la carte aux cartes jouées du tour en cours
             //todo: prendre en compte le niveau de la carte. ou voir pour le faire en fin de tour?
-            //t..odo: tour effectué par un joueur.
         }
 
         public List<HostedGames> GetAvaiableGames()
