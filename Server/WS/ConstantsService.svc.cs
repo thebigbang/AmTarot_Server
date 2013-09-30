@@ -30,7 +30,6 @@ namespace Server.WS
 
         /// <summary>
         /// Permet de renvoyer une liste flushé en random triple.
-        /// Même pas cheaté comme un porc chevalin.
         /// </summary>
         /// <param name="cards"></param>
         private void Randomize(ref List<Card> cards)
@@ -57,7 +56,6 @@ namespace Server.WS
                     }
                 }
                 flushed[randomI] = card;
-                //todo je peux pas compiler ici mais il me semble que ceci, fait planter la boucle
                 //cards.Remove(card);
             }
             cards = flushed;
