@@ -171,7 +171,6 @@ namespace Server.WS
                 {
                     data.Cards+="#"+(daCardsStr[i+18*game.Players.ToList().IndexOf(p)]);
                 }
-                System.Diagnostics.Debug.Print("ICIIIIIII" + data);
                 PlayersData.Create(data);
             }
         }
