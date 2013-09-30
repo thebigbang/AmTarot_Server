@@ -1,0 +1,466 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="database.Store" Alias="Self" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityContainer Name="databaseStoreContainer">
+    <EntitySet Name="HostedGames" EntityType="database.Store.HostedGames" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Accounts" EntityType="database.Store.Accounts" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Versions" EntityType="database.Store.Versions" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PlayersData" EntityType="database.Store.PlayersData" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Accounts_Players" EntityType="database.Store.Accounts_Players" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Accounts_Anon" EntityType="database.Store.Accounts_Anon" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="HostedGamesAccounts" EntityType="database.Store.HostedGamesAccounts" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_HostedGamesAccounts_HostedGames" Association="database.Store.FK_HostedGamesAccounts_HostedGames">
+      <End Role="HostedGames" EntitySet="HostedGames" />
+      <End Role="HostedGamesAccounts" EntitySet="HostedGamesAccounts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HostedGamesAccounts_Accounts" Association="database.Store.FK_HostedGamesAccounts_Accounts">
+      <End Role="Accounts" EntitySet="Accounts" />
+      <End Role="HostedGamesAccounts" EntitySet="HostedGamesAccounts" />
+    </AssociationSet>
+    <AssociationSet Name="HostedGamesPlayers" Association="database.Store.HostedGamesPlayers">
+      <End Role="HostedGames" EntitySet="HostedGames" />
+      <End Role="Players" EntitySet="Accounts_Players" />
+    </AssociationSet>
+    <AssociationSet Name="PlayersDataHostedGames" Association="database.Store.PlayersDataHostedGames">
+      <End Role="PlayersData" EntitySet="PlayersData" />
+      <End Role="HostedGames" EntitySet="HostedGames" />
+    </AssociationSet>
+    <AssociationSet Name="PlayersDataAccounts" Association="database.Store.PlayersDataAccounts">
+      <End Role="PlayersData" EntitySet="PlayersData" />
+      <End Role="Accounts" EntitySet="Accounts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Players_inherits_Accounts" Association="database.Store.FK_Players_inherits_Accounts">
+      <End Role="Accounts" EntitySet="Accounts" />
+      <End Role="Players" EntitySet="Accounts_Players" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Anon_inherits_Accounts" Association="database.Store.FK_Anon_inherits_Accounts">
+      <End Role="Accounts" EntitySet="Accounts" />
+      <End Role="Anon" EntitySet="Accounts_Anon" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="HostedGames">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CardsOrderList" Type="longtext" Nullable="false" />
+    <Property Name="PlayerMax" Type="int" Nullable="false" />
+    <Property Name="GameType" Type="longtext" Nullable="false" />
+    <Property Name="IsLaunched" Type="bool" Nullable="false" DefaultValue="false" />
+    <Property Name="CardsInTurn" Type="longtext" Nullable="true" />
+    <Property Name="Hoster_Id" Type="guid" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Accounts">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="guid" Nullable="false" />
+    <Property Name="LastLogin" Type="datetime" Nullable="false" />
+    <Property Name="AttemptedBlock" Type="longtext" Nullable="false" DefaultValue="False" />
+    <Property Name="PlayersData_Id" Type="int" Nullable="true" />
+  </EntityType>
+  <EntityType Name="Versions">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Server" Type="longtext" Nullable="false" />
+    <Property Name="Db" Type="longtext" Nullable="false" />
+    <Property Name="Client" Type="longtext" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PlayersData">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Cards" Type="longtext" Nullable="false" />
+    <Property Name="Points" Type="decimal" Nullable="false" DefaultValue="0" Precision="2" />
+    <Property Name="GameJoined" Type="bool" Nullable="false" DefaultValue="false" />
+    <Property Name="IsPlayersTurn" Type="bool" Nullable="false" DefaultValue="false" />
+    <Property Name="HostedGames_Id" Type="int" Nullable="true" />
+  </EntityType>
+  <EntityType Name="Accounts_Players">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Username" Type="longtext" Nullable="false" />
+    <Property Name="ScreenName" Type="longtext" Nullable="false" />
+    <Property Name="Pwd" Type="longtext" Nullable="false" />
+    <Property Name="Email" Type="longtext" Nullable="false" />
+    <Property Name="Id" Type="guid" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Accounts_Anon">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="ScreenName" Type="longtext" Nullable="false" />
+    <Property Name="Id" Type="guid" Nullable="false" />
+  </EntityType>
+  <EntityType Name="HostedGamesAccounts">
+    <Key>
+      <PropertyRef Name="GameJoined_Id" />
+      <PropertyRef Name="Players_Id" />
+    </Key>
+    <Property Name="GameJoined_Id" Type="int" Nullable="false" />
+    <Property Name="Players_Id" Type="guid" Nullable="false" />
+  </EntityType>
+  <Association Name="HostedGamesPlayers">
+    <End Role="HostedGames" Type="database.Store.HostedGames" Multiplicity="*" />
+    <End Role="Players" Type="database.Store.Accounts_Players" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Players">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="HostedGames">
+        <PropertyRef Name="Hoster_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PlayersDataHostedGames">
+    <End Role="PlayersData" Type="database.Store.PlayersData" Multiplicity="*" />
+    <End Role="HostedGames" Type="database.Store.HostedGames" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="HostedGames">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PlayersData">
+        <PropertyRef Name="HostedGames_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PlayersDataAccounts">
+    <End Role="PlayersData" Type="database.Store.PlayersData" Multiplicity="0..1" />
+    <End Role="Accounts" Type="database.Store.Accounts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PlayersData">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Accounts">
+        <PropertyRef Name="PlayersData_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HostedGamesAccounts_HostedGames">
+    <End Role="HostedGames" Type="database.Store.HostedGames" Multiplicity="1" />
+    <End Role="HostedGamesAccounts" Type="database.Store.HostedGamesAccounts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="HostedGames">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="HostedGamesAccounts">
+        <PropertyRef Name="GameJoined_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HostedGamesAccounts_Accounts">
+    <End Role="HostedGamesAccounts" Type="database.Store.HostedGamesAccounts" Multiplicity="*" />
+    <End Role="Accounts" Type="database.Store.Accounts" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Accounts">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="HostedGamesAccounts">
+        <PropertyRef Name="Players_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Players_inherits_Accounts">
+    <End Role="Accounts" Type="database.Store.Accounts" Multiplicity="1" />
+    <End Role="Players" Type="database.Store.Accounts_Players" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Accounts">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Players">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Anon_inherits_Accounts">
+    <End Role="Accounts" Type="database.Store.Accounts" Multiplicity="1" />
+    <End Role="Anon" Type="database.Store.Accounts_Anon" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Accounts">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Anon">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2008/09/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="database" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
+        <EntityContainer Name="tarotContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="HostedGames" EntityType="database.HostedGames" />
+          <EntitySet Name="Accounts" EntityType="database.Accounts" />
+          <AssociationSet Name="HostedGamesAccounts" Association="database.HostedGamesAccounts">
+            <End Role="HostedGames" EntitySet="HostedGames" />
+            <End Role="Accounts" EntitySet="Accounts" />
+          </AssociationSet>
+          <AssociationSet Name="HostedGamesPlayers" Association="database.HostedGamesPlayers">
+            <End Role="HostedGames" EntitySet="HostedGames" />
+            <End Role="Players" EntitySet="Accounts" />
+          </AssociationSet>
+          <EntitySet Name="Versions" EntityType="database.Versions" />
+          <EntitySet Name="PlayersData" EntityType="database.PlayersData" />
+          <AssociationSet Name="PlayersDataHostedGames" Association="database.PlayersDataHostedGames">
+            <End Role="PlayersData" EntitySet="PlayersData" />
+            <End Role="HostedGames" EntitySet="HostedGames" />
+          </AssociationSet>
+          <AssociationSet Name="PlayersDataAccounts" Association="database.PlayersDataAccounts">
+            <End Role="PlayersData" EntitySet="PlayersData" />
+            <End Role="Accounts" EntitySet="Accounts" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="HostedGames">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="CardsOrderList" Nullable="false" >
+          </Property>
+          <Property Type="Int32" Name="PlayerMax" Nullable="false" />
+          <NavigationProperty Name="Players" Relationship="database.HostedGamesAccounts" FromRole="HostedGames" ToRole="Accounts" />
+          <NavigationProperty Name="Hoster" Relationship="database.HostedGamesPlayers" FromRole="HostedGames" ToRole="Players" />
+          <Property Type="String" Name="GameType" Nullable="false" />
+          <Property Type="Boolean" Name="IsLaunched" Nullable="false" DefaultValue="False" />
+          <NavigationProperty Name="PlayersData" Relationship="database.PlayersDataHostedGames" FromRole="HostedGames" ToRole="PlayersData" />
+          <Property Type="String" Name="CardsInTurn" Nullable="true" >
+            <Documentation>
+              <LongDescription>Format du string: [playerId]cardName#[playerId2]carName2#[playerId]cardName#[playerId4]carName4#</LongDescription>
+            </Documentation>
+          </Property>
+        </EntityType>
+        <EntityType Name="Accounts">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Guid" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Type="DateTime" Name="LastLogin" Nullable="false" />
+          <Property Type="String" Name="AttemptedBlock" Nullable="false" DefaultValue="False" />
+          <NavigationProperty Name="GameJoined" Relationship="database.HostedGamesAccounts" FromRole="Accounts" ToRole="HostedGames" />
+          <NavigationProperty Name="PlayersData" Relationship="database.PlayersDataAccounts" FromRole="Accounts" ToRole="PlayersData" />
+        </EntityType>
+        <EntityType Name="Anon" BaseType="database.Accounts">
+          <Property Type="String" Name="ScreenName" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Players" BaseType="database.Accounts">
+          <Property Type="String" Name="Username" Nullable="false" />
+          <Property Type="String" Name="ScreenName" Nullable="false" />
+          <Property Type="String" Name="Pwd" Nullable="false" />
+          <Property Type="String" Name="Email" Nullable="false" />
+          <NavigationProperty Name="GameHosted" Relationship="database.HostedGamesPlayers" FromRole="Players" ToRole="HostedGames" />
+        </EntityType>
+        <Association Name="HostedGamesAccounts">
+          <End Type="database.HostedGames" Role="HostedGames" Multiplicity="*" />
+          <End Type="database.Accounts" Role="Accounts" Multiplicity="*" />
+        </Association>
+        <Association Name="HostedGamesPlayers">
+          <End Type="database.HostedGames" Role="HostedGames" Multiplicity="0..1" />
+          <End Type="database.Players" Role="Players" Multiplicity="1" />
+        </Association>
+        <EntityType Name="Versions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Server" Nullable="false" />
+          <Property Type="String" Name="Db" Nullable="false" />
+          <Property Type="String" Name="Client" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PlayersData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="HostedGames" Relationship="database.PlayersDataHostedGames" FromRole="PlayersData" ToRole="HostedGames" />
+          <NavigationProperty Name="Accounts" Relationship="database.PlayersDataAccounts" FromRole="PlayersData" ToRole="Accounts" />
+          <Property Type="String" Name="Cards" Nullable="false" >
+          </Property>
+          <Property Type="Decimal" Name="Points" Nullable="false" Precision="2" DefaultValue="0" />
+          <Property Type="Boolean" Name="GameJoined" Nullable="false" DefaultValue="False" />
+          <Property Type="Boolean" Name="IsPlayersTurn" Nullable="false" DefaultValue="False" />
+        </EntityType>
+        <Association Name="PlayersDataHostedGames">
+          <End Type="database.PlayersData" Role="PlayersData" Multiplicity="*" />
+          <End Type="database.HostedGames" Role="HostedGames" Multiplicity="0..1" />
+        </Association>
+        <Association Name="PlayersDataAccounts">
+          <End Type="database.PlayersData" Role="PlayersData" Multiplicity="0..1" />
+          <End Type="database.Accounts" Role="Accounts" Multiplicity="0..1" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="databaseStoreContainer" CdmEntityContainer="tarotContainer">
+    <EntitySetMapping Name="HostedGames">
+      <EntityTypeMapping TypeName="IsTypeOf(database.HostedGames)">
+        <MappingFragment StoreEntitySet="HostedGames">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="CardsOrderList" ColumnName="CardsOrderList" />
+          <ScalarProperty Name="PlayerMax" ColumnName="PlayerMax" />
+          <ScalarProperty Name="GameType" ColumnName="GameType" />
+          <ScalarProperty Name="IsLaunched" ColumnName="IsLaunched" />
+          <ScalarProperty Name="CardsInTurn" ColumnName="CardsInTurn" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Accounts">
+      <EntityTypeMapping TypeName="IsTypeOf(database.Accounts)">
+        <MappingFragment StoreEntitySet="Accounts">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="LastLogin" ColumnName="LastLogin" />
+          <ScalarProperty Name="AttemptedBlock" ColumnName="AttemptedBlock" />
+        </MappingFragment>
+      </EntityTypeMapping>
+      <EntityTypeMapping TypeName="IsTypeOf(database.Players)">
+        <MappingFragment StoreEntitySet="Accounts_Players">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="ScreenName" ColumnName="ScreenName" />
+          <ScalarProperty Name="Pwd" ColumnName="Pwd" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+        </MappingFragment>
+      </EntityTypeMapping>
+      <EntityTypeMapping TypeName="IsTypeOf(database.Anon)">
+        <MappingFragment StoreEntitySet="Accounts_Anon">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ScreenName" ColumnName="ScreenName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Versions">
+      <EntityTypeMapping TypeName="IsTypeOf(database.Versions)">
+        <MappingFragment StoreEntitySet="Versions">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Server" ColumnName="Server" />
+          <ScalarProperty Name="Db" ColumnName="Db" />
+          <ScalarProperty Name="Client" ColumnName="Client" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PlayersData">
+      <EntityTypeMapping TypeName="IsTypeOf(database.PlayersData)">
+        <MappingFragment StoreEntitySet="PlayersData">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Cards" ColumnName="Cards" />
+          <ScalarProperty Name="Points" ColumnName="Points" />
+          <ScalarProperty Name="GameJoined" ColumnName="GameJoined" />
+          <ScalarProperty Name="IsPlayersTurn" ColumnName="IsPlayersTurn" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="HostedGamesAccounts" TypeName="database.HostedGamesAccounts" StoreEntitySet="HostedGamesAccounts">
+      <EndProperty Name="HostedGames">
+        <ScalarProperty Name="Id" ColumnName="GameJoined_Id" />
+      </EndProperty>
+      <EndProperty Name="Accounts">
+        <ScalarProperty Name="Id" ColumnName="Players_Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="HostedGamesPlayers" TypeName="database.HostedGamesPlayers" StoreEntitySet="HostedGames">
+      <EndProperty Name="Players">
+        <ScalarProperty Name="Id" ColumnName="Hoster_Id" />
+      </EndProperty>
+      <EndProperty Name="HostedGames">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="PlayersDataHostedGames" TypeName="database.PlayersDataHostedGames" StoreEntitySet="PlayersData">
+      <EndProperty Name="HostedGames">
+        <ScalarProperty Name="Id" ColumnName="HostedGames_Id" />
+      </EndProperty>
+      <EndProperty Name="PlayersData">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+      <Condition ColumnName="HostedGames_Id" IsNull="false" />
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="PlayersDataAccounts" TypeName="database.PlayersDataAccounts" StoreEntitySet="Accounts">
+      <EndProperty Name="PlayersData">
+        <ScalarProperty Name="Id" ColumnName="PlayersData_Id" />
+      </EndProperty>
+      <EndProperty Name="Accounts">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+      <Condition ColumnName="PlayersData_Id" IsNull="false" />
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="DDLGenerationTemplate" Value="$(VSEFTools)\DBGen\SSDLToMySQL.tt" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram Name="database" >
+        <EntityTypeShape EntityType="database.HostedGames" Width="1.5" PointX="1.75" PointY="1" Height="2.7494921875" />
+        <EntityTypeShape EntityType="database.Accounts" Width="1.5" PointX="6.875" PointY="1" Height="1.59568359375" />
+        <EntityTypeShape EntityType="database.Anon" Width="1.5" PointX="5.25" PointY="3.125" Height="1.2110807291666665" />
+        <EntityTypeShape EntityType="database.Players" Width="1.5" PointX="7.75" PointY="3.5" Height="1.9802864583333335" />
+        <InheritanceConnector EntityType="database.Anon">
+          <ConnectorPoint PointX="7.625" PointY="2.9802864583333331" />
+          <ConnectorPoint PointX="7.625" PointY="3.0826864583333329" />
+          <ConnectorPoint PointX="6.8524" PointY="3.0826864583333329" />
+          <ConnectorPoint PointX="6.8524" PointY="3.0226" />
+          <ConnectorPoint PointX="6.7726" PointY="3.0226" />
+          <ConnectorPoint PointX="6.7726" PointY="2.9714" />
+          <ConnectorPoint PointX="6" PointY="2.9714" />
+          <ConnectorPoint PointX="6" PointY="3.125" />
+        </InheritanceConnector>
+        <InheritanceConnector EntityType="database.Players" ManuallyRouted="false">
+          <ConnectorPoint PointX="7.625" PointY="2.9802864583333331" />
+          <ConnectorPoint PointX="7.625" PointY="3.2" />
+          <ConnectorPoint PointX="8.5" PointY="3.2" />
+          <ConnectorPoint PointX="8.5" PointY="3.5" />
+        </InheritanceConnector>
+        <AssociationConnector Association="database.HostedGamesAccounts">
+          <ConnectorPoint PointX="2.5" PointY="1" />
+          <ConnectorPoint PointX="2.5" PointY="0.75" />
+          <ConnectorPoint PointX="4.125" PointY="0.75" />
+          <ConnectorPoint PointX="4.125" PointY="3.1148893229166665" />
+          <ConnectorPoint PointX="5" PointY="3.1148893229166665" />
+          <ConnectorPoint PointX="5" PointY="2.875" />
+          <ConnectorPoint PointX="6.5" PointY="2.875" />
+          <ConnectorPoint PointX="6.5" PointY="2.3140087170410153" />
+          <ConnectorPoint PointX="6.875" PointY="2.3140087170410153" />
+        </AssociationConnector>
+        <AssociationConnector Association="database.HostedGamesPlayers">
+          <ConnectorPoint PointX="2.6250005" PointY="3.7494921875" />
+          <ConnectorPoint PointX="2.6250005" PointY="4.4901432291666667" />
+          <ConnectorPoint PointX="7.75" PointY="4.4901432291666667" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="database.Versions" Width="1.5" PointX="0.5" PointY="3.875" Height="1.7879850260416665" />
+        <EntityTypeShape EntityType="database.PlayersData" Width="1.5" PointX="4.375" PointY="0.5" Height="2.3648893229166661" />
+        <AssociationConnector Association="database.PlayersDataHostedGames">
+          <ConnectorPoint PointX="4.375" PointY="1.9324446614583333" />
+          <ConnectorPoint PointX="4.208333333333333" PointY="1.9324446614583326" />
+          <ConnectorPoint PointX="4.041666666666667" PointY="1.9324446614583333" />
+          <ConnectorPoint PointX="3.25" PointY="1.9324446614583333" />
+        </AssociationConnector>
+        <AssociationConnector Association="database.PlayersDataAccounts">
+          <ConnectorPoint PointX="5.875" PointY="1.6550497363281249" />
+          <ConnectorPoint PointX="6.875" PointY="1.6550497363281249" />
+        </AssociationConnector>
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

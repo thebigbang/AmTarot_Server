@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>xsitemap</id>
+    <version>1.1.2.0</version>
+    <title>X.Web.Sitemap</title>
+    <authors>Andrew Gubskiy</authors>
+    <owners>Andrew Gubskiy</owners>
+    <licenseUrl>https://xsitemap.codeplex.com/license</licenseUrl>
+    <projectUrl>https://xsitemap.codeplex.com/</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>X.Web.Sitemap is a part of X-Framework library.
+This library allows you quickly and easily generate a Google-compatible sitemap files.</description>
+    <summary>Library for quickly and easily generate a Google-compatible sitemap files.</summary>
+    <tags>sitemap, seo</tags>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="System" targetFramework="" />
+    </frameworkAssemblies>
+    <references>
+      <reference file="X.Web.Sitemap.dll" />
+    </references>
+  </metadata>
+</package>

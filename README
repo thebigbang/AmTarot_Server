@@ -1,0 +1,4 @@
+Server side of a half personnal/school project. It is a webservice server for card games. Only Tarot is supported at the moment, but can easily extended to support any card game. This is still a W.I.P
+More updates will come, especially to finish the root server, which is still lacking some functions at the moment.
+
+Everything is made to run on a Windows Server, with the MVC4 Pattern.
