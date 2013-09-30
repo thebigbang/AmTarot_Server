@@ -12,8 +12,8 @@ using database;
 namespace Server
 {   /// <summary>
     /// Informations sur les credentials serveurs:
-    /// username: amtarot
-    /// pwd: SuperSupinf0AmTar0tPr0jectAwes0wmeP00ny
+    /// username: ******
+    /// pwd: *****
     /// </summary>
     public class MvcApplication : System.Web.HttpApplication
     {
