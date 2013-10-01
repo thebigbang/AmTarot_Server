@@ -33,5 +33,10 @@ namespace Server.WS
 
         [OperationContract]
         void CreateAccount(string username, string pwd, string email);
+        ///<summary>
+        ///Permet de déconnecter un joueur, anonyme ou non.
+        ///</summary>
+        [OperationContract]
+        void LogOff(Guid id);
     }
 }
