@@ -64,5 +64,9 @@ namespace Server.WS
                                    Username = username
                                });
         }
+        public void LogOff(Guid id)
+        {
+            //todo.
+        }
     }
 }
